@@ -1,75 +1,76 @@
-# Nuxt Minimal Starter
+# Noesis
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Encyclopédie personnelle générée par IA : tape un sujet, obtiens une fiche complète (explication, images, vidéos, quiz).
 
-## Setup
+## L'idée
 
-Make sure to install dependencies:
+Une encyclopédie de poche qui se construit au fil de ta curiosité. Tape n'importe quel sujet — *"comment se forme un tsunami"*, *"pourquoi Rome est tombée"* — et l'application génère une fiche de connaissance complète :
+
+- Une **explication claire**, structurée en étapes ou en sections
+- De **vraies sources** trouvées sur le web (vidéos, articles, livres)
+- Un **quiz** pour vérifier ce qui est resté
+- Des **sujets connexes** pour continuer à creuser
+
+Chaque fiche explorée s'ajoute à un historique personnel.
+
+## Stack technique
+
+- **Framework** : [Nuxt 3](https://nuxt.com) (Vue 3 + serveur Nitro intégré, tout en JavaScript)
+- **IA** : API Claude (Anthropic)
+- **Recherche web/images** : API de recherche externe (Tavily / Serper — à trancher)
+- **Base de données** : SQLite + [Drizzle ORM](https://orm.drizzle.team)
+
+## Structure du projet
+
+```
+noesis/
+├── pages/
+│   └── index.vue           # page principale : formulaire + fiche
+├── components/
+│   ├── FicheCard.vue
+│   └── QuizWidget.vue
+├── server/
+│   ├── api/
+│   │   └── fiche.post.js   # reçoit un sujet, orchestre Claude + recherche, renvoie la fiche
+│   └── utils/
+│       ├── claude.js       # client Anthropic
+│       └── search.js       # client API de recherche
+├── db/
+│   └── schema.js           # schéma Drizzle (fiches, quiz, historique)
+├── nuxt.config.js
+└── package.json
+```
+
+## Installation
 
 ```bash
-# npm
+git clone <repo>
+cd noesis
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+Créer un fichier `.env` à la racine :
 
-Start the development server on `http://localhost:3000`:
+```
+ANTHROPIC_API_KEY=sk-ant-...
+SEARCH_API_KEY=...
+```
+
+Lancer le serveur de dev :
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+L'app est disponible sur `http://localhost:3000`.
 
-Build the application for production:
+## Roadmap
 
-```bash
-# npm
-npm run build
+- [ ] V1 — génération de fiche texte (explication + quiz), stockage en base
+- [ ] V2 — recherche web réelle (images, vidéos, sources)
+- [ ] V3 — historique visuel des sujets explorés + suggestions de sujets connexes
+- [ ] V4 — quiz à répétition espacée (rappel automatique quelques jours après)
 
-# pnpm
-pnpm build
+## Licence
 
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Projet personnel — pas de licence définie pour l'instant.
